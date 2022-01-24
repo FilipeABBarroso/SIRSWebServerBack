@@ -20,6 +20,6 @@ exports.authentication = async (req, res, next) => {
             res.status(200).end();
         })
         .catch(error => {
-            res.status(400).send('Wrong');
+            res.status(400).send('Wrong code');
         });
 }
