@@ -1,24 +1,18 @@
 const usersDB = require('../models/users');
-const { v4 } = require('uuid');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.registration = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const {
+        uuid,
         username,
-        pw,
+        pw, 
     } = req.body;
-
-    const existsUser = await usersDB.findOne({
-        where: {
-            username: username,
-        },
-    });
 
     if(existsUser == undefined){
         const user = await usersDB.create({
-            uid: v4(),
+            uid: uuid,
             username: username,
             password: await bcrypt.hash(pw, salt),
         });
@@ -35,4 +29,24 @@ exports.registration = async (req, res, next) => {
         res.status(400).send('existing user');
     }
 
+}
+
+exports.isRegistered = async (req, res, next) => {
+    console.log('is registered');
+    const {
+        username,
+        pw, 
+    } = req.body;
+
+    const existsUser = await usersDB.findOne({
+        where: {
+            username: username,
+        },
+    });
+
+    if(existsUser != undefined){
+        res.status(400).send('existing user');
+    } else { 
+        res.status(200).send(req.body);
+    }
 }
