@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
 const registrationRouter = require('./routes/registration');
 const loginRouter = require('./routes/login');
+const authenticationRouter = require('./routes/authentication');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(indexRouter);
 app.use(registrationRouter);
 app.use(loginRouter);
+app.use(authenticationRouter);
 
 
 app.use((req, res, next) => {
