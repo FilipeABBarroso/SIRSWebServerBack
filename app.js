@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index');
 const registrationRouter = require('./routes/registration');
 const loginRouter = require('./routes/login');
 const authenticationRouter = require('./routes/authentication');
+const filesRouter = require('./routes/files');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(indexRouter);
 app.use(registrationRouter);
 app.use(loginRouter);
 app.use(authenticationRouter);
+app.use(filesRouter)
 
 
 app.use((req, res, next) => {
