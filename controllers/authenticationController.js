@@ -1,17 +1,11 @@
 require('dotenv').config();
-const jwt = require("jsonwebtoken");
 const axios = require('axios');
 
 exports.authentication = async (req, res, next) => {
     const {
-        uuid,
+        token,
         auth_code,
     } = req.body;
-
-    const token = jwt.sign(
-        { uuid: uuid },
-        process.env.TOKEN_KEY,
-    );
 
     const auth_server = process.env.AUTH_HOST + ":" + process.env.AUTH_PORT;
 

@@ -14,6 +14,10 @@ const Users = db.define('Users', {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
+    uuid: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    },
 });
 
 module.exports = Users;
