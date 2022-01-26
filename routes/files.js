@@ -10,4 +10,13 @@ router.post('/delegateFiles', verifyToken,
 router.get('/delegatedFiles', verifyToken,
     filesController.getDelegated,
 );
+
+router.get('/getFiles', verifyToken,
+    filesController.getFiles,
+);
+
+router.post('/createFile', verifyToken,
+    filesController.createFile,
+);
+
 module.exports = router;

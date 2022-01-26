@@ -21,7 +21,7 @@ app.use(indexRouter);
 app.use(registrationRouter);
 app.use(loginRouter);
 app.use(authenticationRouter);
-app.use(filesRouter)
+app.use(filesRouter);
 
 
 app.use((req, res, next) => {

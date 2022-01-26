@@ -43,7 +43,7 @@ exports.isRegistered = async (req, res, next) => {
     } else { 
         const auth_server = process.env.AUTH_HOST + ":" + process.env.AUTH_PORT;
         
-        axios.get(`http://${auth_server}/register_auth`)
+        axios.get(`https://${auth_server}/register_auth`)
         .then(response => {
             res.status(200).send(response.data);
         })
