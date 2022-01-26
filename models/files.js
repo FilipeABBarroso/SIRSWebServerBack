@@ -1,10 +1,10 @@
 const { DataTypes } = require('sequelize');
+const Users = require('./users');
 const db = require('../db');
 
 const Files = db.define('Files', {
     id: {
-        type: DataTypes.DECIMAL,
-        autoIncrement: true,
+        type: DataTypes.UUID,
         primaryKey: true,
     },
     title: {
@@ -19,9 +19,13 @@ const Files = db.define('Files', {
         type: DataTypes.BOOLEAN,
         allowNull: false,
     },
+    fileHash: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+    }
 });
 
-Files.User = Files.belongsTo(Users, {
+Files.uid = Files.belongsTo(Users, {
     foreignKey: 'uid',
     allowNull: false,
     onUpdate: 'CASCADE',
