@@ -25,14 +25,14 @@ exports.delegate = async (req, res, next) => {
 
     const user = await get_user(uid)
 
-    console.log(files);
-
     if(!user.existsUser){
         res.status(400).send('user not found');
     } else { 
         const auth_server = process.env.AUTH_HOST + ":" + process.env.AUTH_PORT;
         
         const token = jwt.sign({uuid: user.uuid}, process.env.TOKEN_KEY_CONN);
+
+        console.log('vou mandar');
         
         axios.post(`https://${auth_server}/delegate_files`,{files:files}, { headers: { 'x-access-token':token }})
         .then(response => {
@@ -60,8 +60,17 @@ exports.getDelegated = async (req, res, next) => {
         const token = jwt.sign({uuid: user.uuid}, process.env.TOKEN_KEY_CONN);
         
         axios.get(`https://${auth_server}/delegated_files`, { headers: { 'x-access-token':token }})
-        .then(response => {
-            res.status(200).send(response.data);
+        .then(async (response) => {
+            const files = [];
+            response.data.files.map((f) => {
+                files.push(filesDB.findOne({
+                    where: {
+                        fileHash: f.file_hash,
+                    },
+            }));
+            });
+            const ole = await Promise.all(files);
+            res.status(200).send(ole);
         })
         .catch(error => {
             console.log(error);
@@ -109,6 +118,7 @@ exports.getFiles = async (req, res, next) => {
         }
     })
     .then((files) => {
+        console.log(files);
         res.status(200).send(files);
     })
     .catch((err) =>{
