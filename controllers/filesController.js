@@ -19,7 +19,7 @@ exports.delegate = async (req, res, next) => {
             },
         });
         if(file){
-            file.push({"file_hash": hash, "file_name": file.dataValues.title});
+            files.push({"file_hash": hash, "file_name": file.dataValues.title});
         }
     });
 
@@ -34,7 +34,7 @@ exports.delegate = async (req, res, next) => {
         
         const token = jwt.sign({uuid: user.uuid}, process.env.TOKEN_KEY_CONN);
         
-        axios.post(`https://${auth_server}/delegate_files`,{token:token, files:files})
+        axios.post(`https://${auth_server}/delegate_files`,{files:files}, { headers: { 'x-access-token':token }})
         .then(response => {
             res.status(200).end();
         })
